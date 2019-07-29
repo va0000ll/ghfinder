@@ -1,4 +1,13 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Github
+
+Simple Github users finder app build with just react, use react hooks, axios lib, asyc, await
+
+## Github Apis config
+
+To use github apis you have to :
+
+1. Update variables in `.env.dev.local`
+2. Change file name to `.env.local`
 
 ## Available Scripts
 
