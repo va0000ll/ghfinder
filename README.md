@@ -1,5 +1,3 @@
-# Github
-
 Simple Github users finder app build with just react, use react hooks, axios lib, asyc, await
 
 ## Github Apis config
