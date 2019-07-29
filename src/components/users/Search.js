@@ -1,52 +1,54 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 
-export class Search extends Component {
-  state = {
-    text: ''
-  };
+import GithubContext from '../../context/github/githubContext';
+import AlertContext from '../../context/alert/alertContext';
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+let Search = () => {
+  let githubContext = useContext(GithubContext);
+  let alertContext = useContext(AlertContext);
+  let { searchUsers, users, clearUsers } = githubContext;
 
-  onSubmit = e => {
+  let [text, setText] = useState('');
+
+  let onChange = e => setText(e.target.value);
+
+  let onSubmit = e => {
     e.preventDefault();
 
-    if (!this.state.text) {
-      this.props.showAlert('Please enter text', 'danger');
+    if (!text) {
+      alertContext.setAlert('Please enter text', 'light');
       return false;
     }
 
-    this.props.searchUsers(this.state.text);
-    this.setState({ text: '' });
+    searchUsers(text);
+    setText('');
   };
 
-  render() {
-    let { showClear, clearUsers } = this.props;
-    return (
-      <div>
-        <form className="form mb-1" onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            name="text"
-            placeholder="Text"
-            value={this.state.text}
-            onChange={this.onChange}
-          />
-          <button type="submit" className="btn btn-dark btn-block">
-            Submit
-          </button>
-        </form>
-        {showClear && (
-          <button
-            type="button"
-            className="btn btn-ligh btn-block"
-            onClick={clearUsers}
-          >
-            Clear
-          </button>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <form className="form mb-1" onSubmit={onSubmit}>
+        <input
+          type="text"
+          name="text"
+          placeholder="Text"
+          value={text}
+          onChange={onChange}
+        />
+        <button type="submit" className="btn btn-dark btn-block">
+          Submit
+        </button>
+      </form>
+      {users.length > 0 && (
+        <button
+          type="button"
+          className="btn btn-ligh btn-block"
+          onClick={clearUsers}
+        >
+          Clear
+        </button>
+      )}
+    </div>
+  );
+};
 
 export default Search;
